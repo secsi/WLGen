@@ -2,20 +2,33 @@ import sys, getopt, urllib.request, re, cfscrape
 from bs4 import BeautifulSoup
 	
 def main(argv):
-	url,filepath = '',''
+	baseurl,url,filepath = '','',''
+	length=4
+	fullList=set()
 	try:
-		opts, args = getopt.getopt(argv,"hu:o:",["url=","filepath="])
+		opts, args = getopt.getopt(argv,"h:u:o:l:",["help=","url=","filepath=","length="])
 	except getopt.GetoptError:
 		print('WLGen.py -url <http://site.com> -o <outputfile>')
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-h':
-			print('WLGen.py -u <http://site.com> -o <outputfile>')
+			print('###########################################################')
+			print('# Word List Generator v1.5')
+			print('# Author: Dave Addison')
+			print('###########################################################')
+			print('# USAGE: WLGen.py -u <http://site.com> -o <outputfile> -l 5')
+			print('###########################################################')
+			print('# -u / --url: \t\tThe URL to target. Needs to include prefix of http(s)://')
+			print('# -o / --output: \tThe target output file. By default it will print to screen')
+			print('# -l / --length: \tDesired length of words. By default this is 4+')
+			print('###########################################################')
 			sys.exit()
 		elif opt in ("-u", "--url"):
-			url = arg
+			url = "http://"+arg
 		elif opt in ("-o", "--output"):
 			filepath = arg
+		elif opt in ("-l", "--length"):
+			length = int(arg)
 	if url == '':
 		print('You need to provide a host with the -u or --url parameter')
 		print('WLGen.py -u <http://site.com> -o <outputfile>')
@@ -42,26 +55,20 @@ def main(argv):
 	text = soup.get_text()
 	#Split into words
 	text = text.split()
-	#get rid of anything less than 4 characters
-	array = [s for s in text if len(s) > 3]
-
+	
 	print("[+] Compiling teh uber wordlist")
-	if filepath!='':
-		print("[+] Printing to "+filepath)
-		file = open(filepath, "a")
+	for item in text:
+		if len(regex.sub('',item))>=length:
+			fullList.add(regex.sub('',item))
 
-		for line in array:
-			if(regex.sub('',line)!=""):
-				file.write(regex.sub('',line)+"\n")
-		file.close
-	elif filepath=='':
-		print("[+] Printing to teh screen.... cover your eyez!!")
-		for line in array:
-			if(regex.sub('',line)!=""):
-				print(regex.sub('',line))
+			
+	print("[+] Writing all teh words to "+filepath)
+	file = open(filepath, "a")
 
-	print("[+] Oh shitz i think it worked?")		
-
+	for line in fullList:
+		file.write(regex.sub('',line)+"\n")
+	file.close
+	print("[+] Oh shitz i think it worked?")
 if __name__ == "__main__":
 	main(sys.argv[1:])
 	
