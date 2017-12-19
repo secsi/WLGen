@@ -3,7 +3,7 @@ Wordlist generator capable of penetrating cloud flare
 
 Based on the principle of CeWL but with the added use of the CFScrape library to get to sites hidden behind Cloud Flare.
 
-USAGE: WLGen.py -u <http://site.com> -o <outputfile> -l 5
+USAGE: WLGen.py -u <http://simpleinfosec.com> -o <outputfile> -l 5
  
  -u / --url:           The URL to target. Needs to include prefix of http(s)://
  -o / --output:        The target output file. By default it will print to screen
