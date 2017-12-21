@@ -14,7 +14,7 @@ def main(argv):
 		print('WLGen.py -url <http://site.com> -o <outputfile>')
 		sys.exit(2)
 	for opt, arg in opts:
-		if opt == '-h':
+		if opt == '-h' or opt == '--help':
 			print('###########################################################')
 			print('# Word List Generator v1.5')
 			print('# Author: Dave Addison')
@@ -24,7 +24,7 @@ def main(argv):
 			print('# -u / --url: \t\tThe URL to target. Needs to include prefix of http(s)://')
 			print('# -o / --output: \tThe target output file. By default it will print to screen')
 			print('# -l / --length: \tDesired length of words. By default this is 4+')
-			Print('# -d / --depth: \tDesired depth of crawl. Default is 3')
+			print('# -d / --depth: \tDesired depth of crawl. Default is 3')
 			print('###########################################################')
 			sys.exit()
 		elif opt in ("-u", "--url"):
